@@ -6,7 +6,7 @@ import { Cifra } from 'src/models/cifra.model';
 export class CifraDownloadService {
   constructor(@InjectModel(Cifra) private cifraModel: typeof Cifra) {}
 
-  async findOne(id: number) {
+  async execute(id: number) {
     const cifra = await this.cifraModel.findByPk(id);
     if (!cifra) throw new Error('Cifra não encontrada');
     

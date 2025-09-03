@@ -6,7 +6,7 @@ import { Cifra } from 'src/models/cifra.model';
 export class CifraUploadService {
   constructor(@InjectModel(Cifra) private cifraModel: typeof Cifra) {}
 
-  async uploadCifra(data: { title: string; composer: string; instrumentation: string; file: Buffer }) {
+  async execute(data: { title: string; composer: string; instrumentation: string; file: Buffer }) {
     return await this.cifraModel.create({
       title: data.title,
       composer: data.composer,

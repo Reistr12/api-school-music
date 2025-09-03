@@ -1,9 +1,13 @@
 import { Injectable } from "@nestjs/common";
+import { InjectModel } from "@nestjs/sequelize";
+import { User } from "src/models/user.model";
 
 @Injectable()
 export class ShowUserByUsernameService {
+    constructor(@InjectModel(User) private userModel: typeof User){}
+
     async execute(username: string) {
-        const user = {id: 1, username: username, name: "John Doe"}
-        return user; 
+        const user = await this.userModel.findOne({ where: { name: username } });
+        return user;
     };
 }

@@ -1,12 +1,12 @@
 import { Injectable } from "@nestjs/common";
+import { InjectModel } from "@nestjs/sequelize";
+import { User } from "src/models/user.model";
 
 @Injectable()
 export class ShowUsersService {
+    constructor(@InjectModel(User) private userModel: typeof User){}
     async listUsers() {
-        const users = [
-            {nome: 'Gabriel', email: 'gabriel@example.com'}, 
-            {nome: 'João', email: 'joao@example.com'}, 
-            {nome: 'Maria', email: 'maria@example.com'}]
+        const users = await this.userModel.findAll();
         return users;
     }
 

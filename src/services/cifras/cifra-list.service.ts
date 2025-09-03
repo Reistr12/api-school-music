@@ -6,7 +6,7 @@ import { Cifra } from 'src/models/cifra.model';
 export class CifraListService {
   constructor(@InjectModel(Cifra) private cifraModel: typeof Cifra) {}
 
-  async listAll() {
-    return this.cifraModel.findAll({ attributes: ['id', 'title', 'createdAt'] });
+  async execute() {
+    return this.cifraModel.findAll();
   }
 }

@@ -5,7 +5,7 @@ import { ShowUsersService } from "src/services/users/show-users.service";
 export class ShowUsersController {
     constructor(private readonly showUsersService: ShowUsersService) {}
     @Get('list')
-    async listUsers() {
+    async handle() {
         return await this.showUsersService.listUsers()
     }
 }

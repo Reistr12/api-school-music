@@ -8,7 +8,7 @@ export class CifraDownloadController {
     // Download direto como resposta HTTP
       @Get('download/:id')
       async handle(@Param('id') id: string, @Res({ passthrough: true }) res) {
-          const cifra = await this.cifraService.findOne(+id);
+          const cifra = await this.cifraService.execute(+id);
           if (!cifra) {
             throw new HttpException('Cifra não encontrada', 404);
           }

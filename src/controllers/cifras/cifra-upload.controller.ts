@@ -35,7 +35,7 @@ export class CifraController {
     }
   
     try {
-      const cifra = await this.cifraService.uploadCifra({
+      const cifra = await this.cifraService.execute({
         title,
         composer,
         instrumentation,

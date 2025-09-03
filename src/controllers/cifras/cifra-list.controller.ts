@@ -6,6 +6,6 @@ export class CifraListController {
     constructor(private readonly cifraListService: CifraListService) {}
     @Get('list')
     async handle() {
-      return this.cifraListService.listAll();
+      return this.cifraListService.execute();
     }
 }

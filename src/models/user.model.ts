@@ -2,7 +2,7 @@ import { Table, Column, Model, DataType } from 'sequelize-typescript';
 import { Optional } from 'sequelize';
 
 interface UserCreationAttributes {
-  username: string;
+  name: string;
   email: string;
   password: string;
   instruments?: string[];
@@ -20,9 +20,9 @@ export class User extends Model<User, UserCreationAttributes> {
   @Column({
     type: DataType.STRING,
     allowNull: false,
-    unique: true,
+    unique: false,
   })
-  username: string;
+  name: string;
 
   @Column({
     type: DataType.STRING,
