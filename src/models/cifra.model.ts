@@ -39,7 +39,7 @@ export class Cifra extends Model<Cifra, CifraCreationAttributes> {
     type: DataType.BLOB('long'), // aqui armazenamos o PDF
     allowNull: false,
   })
-  file: Buffer;
+  declare file: Buffer;
 
   @Column({
     type: DataType.DATE,

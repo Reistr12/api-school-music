@@ -1,11 +1,10 @@
 import { Controller, Post, UseInterceptors, UploadedFile, Body, Get, Param, Res, HttpException, Header, StreamableFile } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { CifraService } from 'src/services/cifras/cifra.service';
-import { Readable } from 'stream';
+import { CifraUploadService } from 'src/services/cifras/cifra-upload.service';
 
 @Controller('cifras')
 export class CifraController {
-  constructor(private readonly cifraService: CifraService) {}
+  constructor(private readonly cifraService: CifraUploadService) {}
 
   // Upload de cifra
   @Post('upload')
@@ -20,7 +19,7 @@ export class CifraController {
       fileSize: 10 * 1024 * 1024, // 10MB
     }
   }))
-  async upload(
+  async handle(
     @UploadedFile() file: Express.Multer.File,
     @Body('title') title: string,
     @Body('composer') composer: string,
@@ -53,28 +52,4 @@ export class CifraController {
     }
   }
 
-  // Download direto como resposta HTTP
-  @Get('download/:id')
-  async download(@Param('id') id: string, @Res({ passthrough: true }) res) {
-      const cifra = await this.cifraService.findOne(+id);
-      if (!cifra) {
-        throw new HttpException('Cifra não encontrada', 404);
-      }
-  
-      // Configura os headers CORRETAMENTE
-      res.set({
-        'Content-Type': 'application/pdf',
-        'Content-Disposition': `attachment; filename="${cifra.title}.pdf"`, // Usa o título real
-        'Content-Length': cifra.file.length, //  Tamanho do buffer é importante
-      });
-  
-      // Envia o buffer diretamente
-      res.send(cifra.file);
-  }
-
-  // Listar cifras
-  @Get('list')
-  async list() {
-    return this.cifraService.listAll();
-  }
 }
