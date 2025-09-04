@@ -1,5 +1,6 @@
 import { IsEmail, IsString, IsStrongPassword, min } from "class-validator";
 
+
 export class CreateUserDto {
 
     @IsString()

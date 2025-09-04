@@ -22,20 +22,20 @@ export class User extends Model<User, UserCreationAttributes> {
     allowNull: false,
     unique: false,
   })
-  name: string;
+  declare name: string;
 
   @Column({
     type: DataType.STRING,
     allowNull: false,
     unique: true,
   })
-  email: string;
+  declare email: string;
 
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
-  password: string;
+  declare password: string;
 
   @Column({
     type: DataType.JSON, // array de instrumentos

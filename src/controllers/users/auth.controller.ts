@@ -6,7 +6,7 @@ import { AuthService } from "src/services/users/auth.service";
 export class AuthController {
     constructor(private readonly authService: AuthService) {}
     
-    @Post('/login')
+    @Post('login')
     async handle(@Body() data: LoginUserDto) {
         return await this.authService.execute(data);
     }

@@ -6,8 +6,8 @@ import { User } from "src/models/user.model";
 export class ShowUserByUsernameService {
     constructor(@InjectModel(User) private userModel: typeof User){}
 
-    async execute(username: string) {
-        const user = await this.userModel.findOne({ where: { name: username } });
+    async execute(name: string) {
+        const user = await this.userModel.findOne({ where: { name } });
         return user;
     };
 }

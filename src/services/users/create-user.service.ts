@@ -1,5 +1,6 @@
 import { HttpException, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/sequelize";
+import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from "src/dto/user/create-user.dto";
 import { User } from "src/models/user.model";
 
@@ -7,13 +8,13 @@ import { User } from "src/models/user.model";
 export class CreateUserService {
     constructor(@InjectModel(User) private userModel: typeof User){}
     async execute(data: CreateUserDto) {
-        const instruments = ['guitar', 'bass', 'drums', 'vocals']
-        const allValid = data.instruments.every((inst) => instruments.includes(inst));
-
-        if (!allValid) {
-          throw new HttpException('Instrument not found', 400);
+        const userAlreadyExists = await this.userModel.findOne({ where: { email: data.email } });
+        if (userAlreadyExists) {
+            throw new HttpException('User already exists', 400);
         }
 
-        return await this.userModel.create(data);
+        const hashedPassword = await bcrypt.hash(data.password, 10);
+        const user = await this.userModel.create({ ...data, password: hashedPassword });
+        return user;
     }
 }

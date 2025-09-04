@@ -1,14 +1,14 @@
-import { Body, Controller, Get } from "@nestjs/common";
-import { ShowUserByUsernameService} from "src/services/users/show-user-by-username.service";
+import { Controller, Get, Query, NotFoundException } from "@nestjs/common";
+import { ShowUserByUsernameService } from "src/services/users/show-user-by-username.service";
 
 @Controller('users')
 export class ShowUserByUsernameController {
+  constructor(private readonly showUserByUsernameService: ShowUserByUsernameService) {}
 
-    constructor(private readonly showUserByUsernameUseCase: ShowUserByUsernameService) {}
+  @Get('byname')
+  async handle(@Query('name') name: string) {
+    const user = await this.showUserByUsernameService.execute(name);
     
-    @Get(':username')
-    async handle(@Body('username') username: string) {
-        const user = await this.showUserByUsernameUseCase.execute(username);
-        return user;
-    }
-};
+    return user;
+  }
+}

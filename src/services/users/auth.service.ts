@@ -2,6 +2,7 @@ import { HttpException, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/sequelize";
 import { LoginUserDto } from "src/dto/user/login-user.dto";
 import { User } from "src/models/user.model";
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
@@ -14,9 +15,7 @@ export class AuthService {
             throw new HttpException('User not found', 404);
         }
 
-        console.log(user.toJSON() + '========================================================')
-        
-        if(data.password !== user.password) {
+        if(!await bcrypt.compare(data.password, user.password)) {
             throw new HttpException('Invalid credentials', 400);
         }
 
