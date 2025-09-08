@@ -7,7 +7,7 @@ import { User } from "src/models/user.model";
 export class UpdateUserService {
     constructor(@InjectModel(User) private userModel: typeof User){}
     async execute (data: UpdateUserDto, id: number) {
-        const updatedUser = await this.userModel.update(data, { where: { id: id }, returning: true });
+        const updatedUser = await this.userModel.update(data, { where: { id }, returning: true });
         return updatedUser;
     }
 

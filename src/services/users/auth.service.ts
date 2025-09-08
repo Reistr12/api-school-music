@@ -4,6 +4,12 @@ import { LoginUserDto } from "src/dto/user/login-user.dto";
 import { User } from "src/models/user.model";
 import * as bcrypt from 'bcrypt';
 
+export enum UserStatus {
+  PENDING = 'pending',
+  APPROVED = 'approved',
+  REJECTED = 'rejected'
+}
+
 @Injectable()
 export class AuthService {
     constructor(@InjectModel(User) private userModel: typeof User){}
@@ -15,8 +21,15 @@ export class AuthService {
             throw new HttpException('User not found', 404);
         }
 
+        
         if(!await bcrypt.compare(data.password, user.password)) {
             throw new HttpException('Invalid credentials', 400);
+        }
+
+        const status = user.status
+
+        if(status !== UserStatus.APPROVED) {
+            throw new HttpException('User not approved', 403);
         }
 
         return user;

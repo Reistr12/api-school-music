@@ -11,6 +11,10 @@ import { ShowUserByUsernameService } from "src/services/users/show-user-by-usern
 import { UpdateUserService } from "src/services/users/update-user.service";
 import { SequelizeModule } from "@nestjs/sequelize";
 import { User } from "src/models/user.model";
+import { ChangeUserStatusController } from "./change-user-status.controller";
+import { ChangeUserStatusService } from "src/services/users/change-user-status.service";
+import { ShowPendingUsersController } from "./show-pending-users.controller";
+import { ShowPendingUsersService } from "src/services/users/show-pending-users.service";
 
 @Module({
     imports: [SequelizeModule.forFeature([User])],
@@ -20,7 +24,9 @@ import { User } from "src/models/user.model";
         ShowUsersController, 
         AuthController, 
         ShowUserByUsernameController, 
-        UpdateUserController
+        UpdateUserController,
+        ChangeUserStatusController,
+        ShowPendingUsersController
     ],
     providers: 
     [
@@ -28,7 +34,10 @@ import { User } from "src/models/user.model";
         ShowUsersService, 
         AuthService, 
         ShowUserByUsernameService, 
-        UpdateUserService],
+        UpdateUserService,
+        ChangeUserStatusService,
+        ShowPendingUsersService,
+    ],
     exports: []
 })
 export class UserModule {}

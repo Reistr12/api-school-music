@@ -14,7 +14,7 @@ export class CreateUserService {
         }
 
         const hashedPassword = await bcrypt.hash(data.password, 10);
-        const user = await this.userModel.create({ ...data, password: hashedPassword });
+        const user = await this.userModel.create({ ...data, password: hashedPassword, status: 'PENDING' });
         return user;
     }
 }

@@ -6,8 +6,16 @@ interface UserCreationAttributes {
   email: string;
   password: string;
   instruments?: string[];
+  status: string;
 }
 
+export enum UserStatus {
+  PENDING = 'pending',
+  APPROVED = 'approved',
+  REJECTED = 'rejected'
+}
+
+  
 @Table
 export class User extends Model<User, UserCreationAttributes> {
   @Column({
@@ -42,6 +50,11 @@ export class User extends Model<User, UserCreationAttributes> {
     allowNull: true,
   })
   instruments?: string[];
+
+  @Column({
+    type: DataType.STRING ,
+  })
+  declare status: UserStatus;
 
   @Column({
     type: DataType.DATE,
