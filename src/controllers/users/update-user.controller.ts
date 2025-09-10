@@ -7,7 +7,7 @@ export class UpdateUserController {
     constructor(private readonly updateUserService: UpdateUserService) {}
 
     @Patch('update')
-    async handle(@Body() data: UpdateUserDto, @Param('id', ParseIntPipe) id: number) {
-        return await this.updateUserService.execute(data, id);
+    async handle(@Body() data: UpdateUserDto) {
+        return await this.updateUserService.execute(data);
     }   
 }

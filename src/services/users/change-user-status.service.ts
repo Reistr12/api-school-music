@@ -12,6 +12,7 @@ export class ChangeUserStatusService {
             return updatedUser;
         }else if(status.toLowerCase() === UserStatus.REJECTED) {
             const updatedUser = await this.userModel.update({ status: UserStatus.REJECTED }, { where: { email }, returning: true });
+            this.userModel.destroy({ where: { email } });
             return updatedUser;
         }
 
